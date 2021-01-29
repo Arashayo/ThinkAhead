@@ -8,21 +8,25 @@ public class KAMIENIE : MonoBehaviour
     public Transform movePoint;
     public Transform kamor2;
     public LayerMask whatStopsMov;
-    public float kamyczki;
-    public float kamyczki2;
+    public Vector3 kamyczki;
+    public int kamyczki2;
 
-    private void FixedUpdate()
+
+    private void Update()
     {
-        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1)
-        { 
-        kamyczki = Input.GetAxisRaw("Horizontal");
-        }
-        if (Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+        if(Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 )
         {
-        kamyczki2 = Input.GetAxisRaw("Vertical");
+            kamyczki = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f);
         }
+
+        if(Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+        {
+            kamyczki = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0f);
+        }
+        
 
     }
+
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -31,10 +35,7 @@ public class KAMIENIE : MonoBehaviour
         {
 
 
-
-            kamor2.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-
-            kamor2.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+            kamor2.position += kamyczki;
 
            // kamor2.position += kamor2.position - other.transform.position;
                 
