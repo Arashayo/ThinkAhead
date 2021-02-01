@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class KAMIENIE : MonoBehaviour
 {
-    public Transform movePoint;
     public Transform kamor2;
-    public LayerMask whatStopsMov;
     public Vector3 kamyczki;
     public int kamyczki2;
 
@@ -42,6 +40,14 @@ public class KAMIENIE : MonoBehaviour
            
             
 
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "kamor")
+        {
+            kamor2.position += new Vector3(1f, 0f, 0f);
+            Debug.Log("Kurwa no");
         }
     }
 
