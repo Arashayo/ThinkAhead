@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public GameObject kamor2;
     private int ruchy;
     public GameObject ruszki;
+    public Animator transition;
+    public float transT = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -68,9 +70,11 @@ public class PlayerController : MonoBehaviour
         }
 
         ruszki.GetComponent<Text>().text = ruchy.ToString("F0");
-        if (ruchy == 0)
+        if (ruchy <= 0)
         {
-            SceneManager.LoadScene("SampleScene");
+            // transition.SetTrigger("restart");
+            // SceneManager.LoadScene("SampleScene");
+            RestartLvl();
         }
     }
 
@@ -78,12 +82,32 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "kamor")
         {
-
             movePoint.position -= last;
-
         }
+        else if (collision.tag == "kolce")
+        {
+            ruchy--;
+        }
+
+    }
+    public void RestartLvl()
+    {
+
+        StartCoroutine(LoadLvl(SceneManager.GetActiveScene().buildIndex + 1));
+
     }
 
+    IEnumerator LoadLvl(int levelIndex)
+    {
+
+        transition.SetTrigger("restart");
+
+
+        yield return new WaitForSeconds(transT);
+
+        SceneManager.LoadScene("SampleScene");
+
+    }
 
 
 }
